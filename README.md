@@ -303,6 +303,90 @@ ghostty +list-keybinds
 
 ---
 
+## tmux Keybinding Customizations
+
+Oh My tmux ships with default pane split bindings
+
+```text
+prefix -  → horizontal split (top/bottom)
+prefix _  → vertical split (left/right)
+```
+
+Since `_` requires using the Shift key, a more ergonomic configuration is to use:
+
+- `prefix v` → vertical split (left/right panes)
+- `prefix s` → horizontal split (top/bottom panes)
+
+### Update `~/.tmux.conf.local`
+
+Add the following to
+
+```text
+~/.tmux.conf.local
+```
+
+```tmux
+#
+# Pane splits
+# Override Oh My tmux defaults.
+# Use easy-to-type keys without requiring Shift.
+#
+
+# Remove existing bindings
+unbind -
+unbind _
+
+# Vertical split (left/right panes)
+bind v split-window -h
+
+# Horizontal split (top/bottom panes)
+bind s split-window -v
+```
+
+### Result
+
+| Key      | Action                              |
+|----------|-------------------------------------|
+| prefix v | Vertical split (left/right panes)   |
+| prefix s | Horizontal split (top/bottom panes) |
+
+Visual representation
+
+Vertical split (`prefix v`)
+
+```text
++-----+-----+
+|     |     |
+|     |     |
++-----+-----+
+```
+
+Horizontal split (`prefix s`)
+
+```text
++-----------+
+|           |
++-----------+
+|           |
++-----------+
+```
+
+### Reload tmux Configuration
+
+From a shell
+
+```bash
+tmux source-file ~/.tmux.conf
+```
+
+Or inside tmux, use the Oh My tmux reload shortcut
+
+```text
+prefix r
+```
+
+These customizations apply to all tmux sessions regardless of whether you use Kitty, Ghostty, or a remote SSH terminal.
+
 # Auto tmux Startup vs Manual tmux Startup
 
 Both Kitty and Ghostty can automatically start or reconnect to a tmux session.
@@ -428,8 +512,8 @@ prefix p
 Panes
 
 ```text
-prefix |
-prefix -
+prefix v
+prefix h
 prefix Arrow
 prefix z
 ```
@@ -440,7 +524,7 @@ prefix z
 
 Terminal owns clipboard integration.
 
-Vim:
+Vim
 
 ```vim
 "+yy
@@ -448,13 +532,13 @@ Vim:
 "+p
 ```
 
-bat on macOS:
+bat on macOS
 
 ```bash
 bat README.md | pbcopy
 ```
 
-bat on Linux:
+bat on Linux
 
 ```bash
 bat README.md | xsel --clipboard
